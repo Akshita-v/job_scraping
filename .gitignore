@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+opportunities.csv
+not_required_*.py
+not_required_*.csv
+main_old.py
+opportunities_old.csv
+scrapers/not_required_unstop.py
