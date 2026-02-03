@@ -52,7 +52,8 @@ def linkedin_links(keywords):
                     "source": "linkedin"
                 })
         except Exception as e:
-            print(f"❌ LinkedIn error for {k}: {e}")
+            print(f"[ERROR] LinkedIn error for {k}: {e}")
+            continue
 
     print(f"linkedin scraped: {len(jobs)}")
     return jobs

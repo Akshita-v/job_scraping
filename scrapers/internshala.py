@@ -13,7 +13,7 @@ def scrape_internshala(keywords):
     try:
         response = requests.get(url, headers=headers, timeout=15)
     except Exception as e:
-        print("❌ Internshala request failed:", e)
+        print("[ERROR] Internshala request failed:", e)
         return []
 
     soup = BeautifulSoup(response.text, "html.parser")
@@ -24,16 +24,21 @@ def scrape_internshala(keywords):
     internship_links = soup.select("h3 a[href*='internship/detail']")
 
     if not internship_links:
-        print("⚠️ Internshala: No internship links found")
+        print("[WARNING] Internshala: No internship links found")
         return []
 
     for link_tag in internship_links:
         title = link_tag.text.strip()
         link = "https://internshala.com" + link_tag["href"]
 
-        # Find the company: the next text after the h3
+        # Find the company: in the next div with class "heading_6 company_name"
         h3 = link_tag.find_parent("h3")
-        company = h3.next_sibling.strip() if h3 and h3.next_sibling else "Internshala"
+        company_div = h3.find_next_sibling("div", class_="heading_6 company_name")
+        if company_div:
+            company_p = company_div.find("p", class_="company-name")
+            company = company_p.text.strip() if company_p else "Internshala"
+        else:
+            company = "Internshala"
 
         combined_text = f"{title} {company}".lower()
 

@@ -8,3 +8,9 @@ not_required_*.csv
 main_old.py
 opportunities_old.csv
 scrapers/not_required_unstop.py
+
+# Local scheduler/automation files (contain personal paths)
+schedule_runner.py
+run_daily.bat
+SCHEDULER_SETUP.md
+scheduler.log

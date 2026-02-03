@@ -45,6 +45,6 @@ JOBLIST Team"""
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
             smtp.login(EMAIL, PASSWORD)
             smtp.send_message(msg)
-        print("✅ Email sent successfully")
+        print("[SUCCESS] Email sent successfully")
     except Exception as e:
-        print(f"❌ Failed to send email: {e}")
+        print(f"[ERROR] Failed to send email: {e}")

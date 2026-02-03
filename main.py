@@ -12,56 +12,57 @@ from scrapers.company_careers import company_career_links
 from csv_manager import save_jobs, get_unsent_jobs, mark_sent
 from email_sender import send_email
 
-KEYWORDS = ["ai", "machine learning", "data science"]
+KEYWORDS = ["ai", "machine learning", "data science", "deep learning", "computer vision", "nlp", "robotics", "reinforcement learning", "predictive modeling", "big data", "data engineering", "data analytics", "business intelligence", "statistical analysis", "cloud computing", "tensorflow", "pytorch", "keras", "scikit-learn", "r programming",
+            "summer internship", "winter internship", "research internship", "undergraduate internship", "graduate internship", "data science internship", "machine learning internship", "artificial intelligence internship", "deep learning internship"," computer vision internship", "nlp internship", "robotics internship","ai intern", " Ml internship"]
 
 def main():
-    print("\n🚀 JOB SCRAPER STARTED\n")
+    print("\n[JOB SCRAPER STARTED]\n")
 
     all_jobs = []
 
     try:
         all_jobs.extend(scrape_internshala(KEYWORDS))
     except Exception as e:
-        print("❌ Internshala failed:", e)
+        print("[ERROR] Internshala failed:", e)
 
     try:
         all_jobs.extend(wellfound_links(KEYWORDS))
     except Exception as e:
-        print("❌ Wellfound failed:", e)
+        print("[ERROR] Wellfound failed:", e)
 
     try:
         all_jobs.extend(linkedin_links(KEYWORDS))
     except Exception as e:
-        print("❌ LinkedIn failed:", e)
+        print("[ERROR] LinkedIn failed:", e)
 
     try:
         all_jobs.extend(scrape_unstop_play(KEYWORDS))
     except ImportError:
-        print("❌ Unstop skipped: Playwright not installed")
+        print("[ERROR] Unstop skipped: Playwright not installed")
     except Exception as e:
-        print("❌ Unstop failed:", e)
+        print("[ERROR] Unstop failed:", e)
 
     try:
         all_jobs.extend(naukri_links(KEYWORDS))
     except Exception as e:
-        print("❌ Naukri failed:", e)
+        print("[ERROR] Naukri failed:", e)
 
     try:
         all_jobs.extend(company_career_links(KEYWORDS))
     except Exception as e:
-        print("❌ Company Careers failed:", e)
+        print("[ERROR] Company Careers failed:", e)
 
-    print(f"\n🔎 Total jobs found: {len(all_jobs)}")
+    print(f"\n[TOTAL] Total jobs found: {len(all_jobs)}")
 
     save_jobs(all_jobs)
 
     new_jobs = get_unsent_jobs()
-    print(f"📬 New jobs to email: {len(new_jobs)}")
+    print(f"[EMAIL] New jobs to email: {len(new_jobs)}")
 
     send_email(new_jobs)
     mark_sent(new_jobs)
 
-    print("\n✅ ALL DONE\n")
+    print("\n[SUCCESS] ALL DONE\n")
     sys.exit(0)
 
 if __name__ == "__main__":
